@@ -1,9 +1,10 @@
 package br.com.wagnerandrade.springboot.controller;
 
 import br.com.wagnerandrade.springboot.domain.Anime;
+import br.com.wagnerandrade.springboot.requests.AnimePostDTO;
+import br.com.wagnerandrade.springboot.requests.AnimePutDTO;
 import br.com.wagnerandrade.springboot.service.AnimeService;
 import br.com.wagnerandrade.springboot.util.DateUtil;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -29,12 +30,12 @@ public class AnimeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(this.animeService.findById(id));
+        return ResponseEntity.ok(this.animeService.findByIdOrthrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return new ResponseEntity(this.animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostDTO animePostDTO) {
+        return new ResponseEntity(this.animeService.save(animePostDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -44,8 +45,8 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> update(@RequestBody Anime anime) {
-        this.animeService.update(anime);
+    public ResponseEntity<Anime> update(@RequestBody AnimePutDTO animePutDTO) {
+        this.animeService.update(animePutDTO);
         return ResponseEntity.noContent().build();
     }
 
