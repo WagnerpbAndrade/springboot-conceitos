@@ -43,4 +43,10 @@ public class AnimeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping
+    public ResponseEntity<Anime> update(@RequestBody Anime anime) {
+        this.animeService.update(anime);
+        return ResponseEntity.noContent().build();
+    }
+
 }
