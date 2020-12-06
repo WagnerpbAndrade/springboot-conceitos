@@ -1,6 +1,7 @@
 package br.com.wagnerandrade.springboot.service;
 
 import br.com.wagnerandrade.springboot.domain.Anime;
+import br.com.wagnerandrade.springboot.mapper.AnimeMapper;
 import br.com.wagnerandrade.springboot.repository.AnimeRepository;
 import br.com.wagnerandrade.springboot.requests.AnimePostDTO;
 import br.com.wagnerandrade.springboot.requests.AnimePutDTO;
@@ -27,7 +28,7 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostDTO animePostDTO) {
-        return this.repository.save(Anime.builder().name(animePostDTO.getName()).build());
+        return this.repository.save(AnimeMapper.INSTANCE.toAnime(animePostDTO));
     }
 
     public void delete(Long id) {
@@ -36,11 +37,8 @@ public class AnimeService {
 
     public void update(AnimePutDTO animePutDTO) {
         Anime savedAnime = findByIdOrthrowBadRequestException(animePutDTO.getId());
-        Anime anime = Anime.builder()
-                .id(savedAnime.getId())
-                .name(animePutDTO.getName())
-                .build();
-
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutDTO);
+        anime.setId(savedAnime.getId());
         this.repository.save(anime);
     }
 }
