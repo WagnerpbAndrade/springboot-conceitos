@@ -7,6 +7,8 @@ import br.com.wagnerandrade.springboot.repository.AnimeRepository;
 import br.com.wagnerandrade.springboot.requests.AnimePostDTO;
 import br.com.wagnerandrade.springboot.requests.AnimePutDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +20,8 @@ public class AnimeService {
 
     private final AnimeRepository repository;
 
-    public List<Anime> listAll() {
-        return this.repository.findAll();
+    public Page<Anime> listAll(Pageable pageable) {
+        return this.repository.findAll(pageable);
     }
 
     public List<Anime> findByName(String name) {
