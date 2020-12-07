@@ -22,6 +22,10 @@ public class AnimeService {
         return this.repository.findAll();
     }
 
+    public List<Anime> findByName(String name) {
+        return this.repository.findByName(name);
+    }
+
     public Anime findByIdOrthrowBadRequestException(Long id) {
         return this.repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));

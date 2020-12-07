@@ -33,6 +33,11 @@ public class AnimeController {
         return ResponseEntity.ok(this.animeService.findByIdOrthrowBadRequestException(id));
     }
 
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(this.animeService.findByName(name));
+    }
+
     @PostMapping
     public ResponseEntity<Anime> save(@RequestBody AnimePostDTO animePostDTO) {
         return new ResponseEntity(this.animeService.save(animePostDTO), HttpStatus.CREATED);
