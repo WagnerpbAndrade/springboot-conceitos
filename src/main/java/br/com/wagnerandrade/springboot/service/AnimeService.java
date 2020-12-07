@@ -7,9 +7,8 @@ import br.com.wagnerandrade.springboot.repository.AnimeRepository;
 import br.com.wagnerandrade.springboot.requests.AnimePostDTO;
 import br.com.wagnerandrade.springboot.requests.AnimePutDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +31,7 @@ public class AnimeService {
                 .orElseThrow(() -> new BadRequestException("Anime not found"));
     }
 
+    @Transactional
     public Anime save(AnimePostDTO animePostDTO) {
         return this.repository.save(AnimeMapper.INSTANCE.toAnime(animePostDTO));
     }
