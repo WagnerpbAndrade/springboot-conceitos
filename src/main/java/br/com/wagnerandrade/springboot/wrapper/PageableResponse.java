@@ -1,0 +1,38 @@
+package br.com.wagnerandrade.springboot.wrapper;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Getter;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
+@Getter
+public class PageableResponse<T> extends PageImpl<T> {
+    private boolean first;
+    private boolean last;
+    private int totalPages;
+    private int numberOfElements;
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public PageableResponse(@JsonProperty("content") List<T> content,
+                            @JsonProperty("number") int number,
+                            @JsonProperty("size") int size,
+                            @JsonProperty("totalElements") int totalElements,
+                            @JsonProperty("first") boolean first,
+                            @JsonProperty("last") boolean last,
+                            @JsonProperty("totalPages") int totalPages,
+                            @JsonProperty("numberOfElements") int numberOfElements,
+                            @JsonProperty("pageable") JsonNode pageable,
+                            @JsonProperty("sort") JsonNode sort) {
+        super(content, PageRequest.of(number, size), totalElements);
+
+        this.first = first;
+        this.last = last;
+        this.totalPages = totalPages;
+        this.numberOfElements = numberOfElements;
+    }
+}
