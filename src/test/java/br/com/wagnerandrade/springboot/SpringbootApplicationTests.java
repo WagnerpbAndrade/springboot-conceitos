@@ -3,10 +3,10 @@ package br.com.wagnerandrade.springboot;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class SpringbootApplicationTests {
 
-    @Test
+    //@Test
     void contextLoads() {
     }
 
