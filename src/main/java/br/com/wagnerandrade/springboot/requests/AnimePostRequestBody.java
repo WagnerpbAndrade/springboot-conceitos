@@ -1,12 +1,13 @@
 package br.com.wagnerandrade.springboot.requests;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Data
-public class AnimePostDTO {
+@Builder
+public class AnimePostRequestBody {
     @NotEmpty(message = "the anime name cannot be empty")
     private String name;
 }

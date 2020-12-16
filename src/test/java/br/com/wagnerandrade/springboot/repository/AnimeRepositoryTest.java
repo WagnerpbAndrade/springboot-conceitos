@@ -1,6 +1,7 @@
 package br.com.wagnerandrade.springboot.repository;
 
 import br.com.wagnerandrade.springboot.domain.Anime;
+import br.com.wagnerandrade.springboot.util.AnimeCreator;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save persists anime when successful")
     void save_PersistAnime_WhenSuccessfull() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -39,11 +40,11 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime when successful")
     void save_UpdatesAnime_WhenSuccessfull() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createValidUpdatedAnime();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
-        animeSaved.setName("Overlord");
+        animeSaved.setName("Hajime no Ippo 2");
 
         Anime animeUpdated = this.animeRepository.save(animeSaved);
 
@@ -57,7 +58,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when successful")
     void delete_RemovesAnime_WhenSuccessfull() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -71,7 +72,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find By Name return list of anime when successful")
     void findByName_ReturnListOfAnime_WhenSuccessfull() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -95,7 +96,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save thow ConstraintViolationException when name is empty")
     void save_ThrowConstraintViolationException_WhenNameIsEmpty() {
-        Anime animeToBeSaved = new Anime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeNameIsEmpty();
 
 //        Assertions.assertThatThrownBy(() -> this.animeRepository.save(animeToBeSaved))
 //                .isInstanceOf(ConstraintViolationException.class);
@@ -106,9 +107,4 @@ class AnimeRepositoryTest {
 
     }
 
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Hajime no Ippo")
-                .build();
-    }
 }

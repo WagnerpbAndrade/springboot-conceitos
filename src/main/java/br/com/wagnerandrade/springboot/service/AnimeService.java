@@ -4,8 +4,8 @@ import br.com.wagnerandrade.springboot.domain.Anime;
 import br.com.wagnerandrade.springboot.exception.BadRequestException;
 import br.com.wagnerandrade.springboot.mapper.AnimeMapper;
 import br.com.wagnerandrade.springboot.repository.AnimeRepository;
-import br.com.wagnerandrade.springboot.requests.AnimePostDTO;
-import br.com.wagnerandrade.springboot.requests.AnimePutDTO;
+import br.com.wagnerandrade.springboot.requests.AnimePostRequestBody;
+import br.com.wagnerandrade.springboot.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,17 +38,17 @@ public class AnimeService {
     }
 
     @Transactional
-    public Anime save(AnimePostDTO animePostDTO) {
-        return this.repository.save(AnimeMapper.INSTANCE.toAnime(animePostDTO));
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
+        return this.repository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(Long id) {
         this.repository.delete(findByIdOrthrowBadRequestException(id));
     }
 
-    public void update(AnimePutDTO animePutDTO) {
-        Anime savedAnime = findByIdOrthrowBadRequestException(animePutDTO.getId());
-        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutDTO);
+    public void update(AnimePutRequestBody animePutRequestBody) {
+        Anime savedAnime = findByIdOrthrowBadRequestException(animePutRequestBody.getId());
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
         anime.setId(savedAnime.getId());
         this.repository.save(anime);
     }
